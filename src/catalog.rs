@@ -1119,9 +1119,9 @@ pub fn all_labs() -> Vec<Box<Lab>> {
     labdef!(name_of_str("hammer-s17-hw0-split"),
             Some(String::from("")),
             hammer_s17_hw0::List<usize>, usize,
-            hammer_s17_hw0::List<usize>,
+            (hammer_s17_hw0::List<usize>, hammer_s17_hw0::List<usize>),
             hammer_s17_hw0::Editor,
-            hammer_s17_hw0::RunFilter)
+            hammer_s17_hw0::RunSplit)
       ,
 
     labdef!(name_of_str("hammer-s17-hw0-reverse"),
@@ -1129,7 +1129,7 @@ pub fn all_labs() -> Vec<Box<Lab>> {
             hammer_s17_hw0::List<usize>, usize,
             hammer_s17_hw0::List<usize>,
             hammer_s17_hw0::Editor,
-            hammer_s17_hw0::RunFilter)
+            hammer_s17_hw0::RunReverse)
       ,
 
   ]
