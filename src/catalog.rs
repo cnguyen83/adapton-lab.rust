@@ -443,9 +443,29 @@ pub mod hammer_s17_hw0 {
   {
     match inp {
       List::Nil => List::Nil,
-      List::Cons(e, nm, ref) => {
-        
+      List::Cons(e, nm, rc) => {
+        memo!(nm.clone() =>> list_filter_cons =>> <X,F>,
+              e:e, nm:nm, rc:rc
+              ;;
+              f:f)
       }
+    }
+  }
+
+// Reference used: http://stackoverflow.com/questions/31168589/forcing-a-move-for-an-implemented-copy-type
+  pub fn list_filter_cons<X:Eq+Clone+Hash+Debug+'static,
+                          F:'static>
+    (e:X, nm:Name, rc:Art<List<X>>, f:Rc<F>) -> List<X>
+    where F:Fn(X) -> bool
+  {
+    let (nm1, nm2) = name_fork(nm);
+    let expr = e.clone();
+    let y = f(e);
+    let rest = list_filter(force(&rc), f);
+    if y {
+      List::Cons(expr, nm1, cell(nm2, rest))
+    } else {
+      rest
     }
   }
 
