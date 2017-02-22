@@ -435,6 +435,8 @@ pub mod hammer_s17_hw0 {
     Cons(X, Name, Art<List<X>>)
   }
 
+  // Does Rust allow for nested helper functions?
+
   /// List filter:
   pub fn list_filter<X:Eq+Clone+Hash+Debug+'static,
                      F:'static>
@@ -520,7 +522,60 @@ pub mod hammer_s17_hw0 {
     List::Cons(list_reverse(force(&rc), f), nm1, cell(nm2, expr))
   }
 
-  
+  // Second stab at List Reverse
+  pub fn list_reverse<X:Eq+Clone+Hash+Debug+'static>
+    (inp: List<X>) -> List<X>
+  {
+    match inp{
+      List::Nil => List::Nil,
+      List::Cons(e, nm, rc) => {
+        memo!(nm.clone() =>> list_reverse_cons =>> <X>,
+          e:e, nm:nm, rc:rc;;)
+      }
+    }
+  }
+
+
+  // Class walkthrough 02/22/2017
+  // Why are lists defined a certain way?
+  // Why are these written in a two-function approach?
+  //
+  // C is a reference Cons cell.
+  // Handle Nil case by returning Nil
+  // Handle Cons case by calling a new function
+  // Want to write a map that works for any type
+  // Rust isn't very good with type parameter
+  // <X, Y, F> is being passed because the macro needs a type parameter
+  // memo! is essentially a function call. The name has to be cloned to be passed to the function call.
+  // =>> is just a fancy comma (name, function, type parameter)
+  // Then there are arguments. Why do the arguments have names?
+  // Why is there a double semi-colon?
+  // The arguments have names because of the macro expression
+  // What's getting stored in the memo table? (There's no lift)
+  // In the memo table, we add a column of names, one of the function, one of the arg, and one of the result
+  // There's only one place in the table for the arguments, so we have to make a tuple of the args.
+  // Equality on the arg because need to check if the same args are called again
+  // Therefore f is alone because f is a function and you can't compare functions for equality.
+  // Using the double ;; is just a way of saying don't compare that for equality
+  // Ideally the name should indicate which f we're talking about
+  // What if you don't want to pass an "f"?
+  // If we want to bypass the macros, all of the macros are using thunks
+  // You can just call the thunks directly
+  // For split, you have to split the list first
+  //
+  // For list_reverse you actually need an inductive piece, like an accumulator
+  // Should take the reverse list as an additional argument
+  // There's no function because there's no mapping or predicate
+  // normally reverse is written as:
+  // let rev e r =
+  //   match e
+  //     Nil => r
+  //     h::t=> rev t(h::r)
+  // 
+  // Rust can't infer a type for an anonymous function? Doesn't have global type inference.
+  // 
+  // How to read test output for these codes
+  // 
 
 
   #[derive(Clone,Debug)]
