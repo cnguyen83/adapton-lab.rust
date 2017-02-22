@@ -441,7 +441,12 @@ pub mod hammer_s17_hw0 {
     (inp: List<X>, f:Rc<F>) -> List<X> 
     where F:Fn(X) -> bool
   {
-    panic!("TODO")
+    match inp {
+      List::Nil => List::Nil,
+      List::Cons(e, nm, ref) => {
+        
+      }
+    }
   }
 
   /// List split:
