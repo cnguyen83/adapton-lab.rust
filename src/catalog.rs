@@ -461,11 +461,10 @@ pub mod hammer_s17_hw0 {
     let (nm1, nm2) = name_fork(nm);
     let expr = e.clone();
     let y = f(e);
-    let rest = list_filter(force(&rc), f);
     if y {
-      List::Cons(expr, nm1, cell(nm2, rest))
+      List::Cons(expr, nm1, cell(nm2, list_filter(force(&rc), f)))
     } else {
-      rest
+      list_filter(force(&rc), f)
     }
   }
 
@@ -475,7 +474,31 @@ pub mod hammer_s17_hw0 {
     (inp: List<X>, f:Rc<F>) -> (List<X>, List<X>)
     where F:Fn(X) -> bool
   {
-    panic!("TODO")
+    match inp{
+      List::Nil => (List::Nil, List::Nil),
+      List::Cons(e, nm, rc) => {
+        memo!(nm.clone() =>> list_split_cons =>> <X,F>,
+              e:e, nm:nm, rc:rc
+              ;;
+              f:f)
+      }
+    }
+  }
+
+  pub fn list_split_cons<X:Eq+Clone+Hash+Debug+'static,
+                          F:'static>
+    (e:X, nm:Name, rc:Art<List<X>>, f:Rc<F>) -> (List<X>, List<X>)
+    where F:Fn(X) -> bool
+  {
+    let (nm1, nm2) = name_fork(nm);
+    let expr = e.clone();
+    let y = f(e);
+    let (split1, split2) = list_split(force(&rc), f);
+    if y {
+      (List::Cons(expr, nm1, cell(nm2, split1)), split2)
+    } else {
+      (split1, List::Cons(expr, nm1, cell(nm2, split2)))
+    }
   }
 
   /// List reverse:
