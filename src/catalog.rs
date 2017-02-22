@@ -460,8 +460,7 @@ pub mod hammer_s17_hw0 {
   {
     let (nm1, nm2) = name_fork(nm);
     let expr = e.clone();
-    let y = f(e);
-    if y {
+    if f(e) {
       List::Cons(expr, nm1, cell(nm2, list_filter(force(&rc), f)))
     } else {
       list_filter(force(&rc), f)
@@ -492,9 +491,8 @@ pub mod hammer_s17_hw0 {
   {
     let (nm1, nm2) = name_fork(nm);
     let expr = e.clone();
-    let y = f(e);
     let (split1, split2) = list_split(force(&rc), f);
-    if y {
+    if f(e) {
       (List::Cons(expr, nm1, cell(nm2, split1)), split2)
     } else {
       (split1, List::Cons(expr, nm1, cell(nm2, split2)))
@@ -505,7 +503,21 @@ pub mod hammer_s17_hw0 {
   pub fn list_reverse<X:Eq+Clone+Hash+Debug+'static>
     (inp: List<X>) -> List<X>
   {
-    panic!("TODO")
+    match inp{
+      List::Nil => List::Nil,
+      List::Cons(e, nm, rc) => {
+        memo!(nm.clone() =>> list_reverse_cons =>> <X>,
+          e:e, nm:nm, rc:rc;;)
+      }
+    }
+  }
+
+  pub fn list_reverse_cons<X:Eq+Clone+Hash+Debug+'static>
+    (int: List<X>) -> List<X>
+  {
+    let (nm1, nm2) = name_fork(nm);
+    let expr = e.clone();
+    List::Cons(list_filer(force(&rc), f), nm1, cell(nm2, expr))
   }
 
 
