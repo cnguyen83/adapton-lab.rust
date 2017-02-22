@@ -517,8 +517,10 @@ pub mod hammer_s17_hw0 {
   {
     let (nm1, nm2) = name_fork(nm);
     let expr = e.clone();
-    List::Cons(list_filer(force(&rc), f), nm1, cell(nm2, expr))
+    List::Cons(list_reverse(force(&rc), f), nm1, cell(nm2, expr))
   }
+
+  
 
 
   #[derive(Clone,Debug)]
