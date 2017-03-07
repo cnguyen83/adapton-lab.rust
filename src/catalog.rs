@@ -698,6 +698,24 @@ pub mod hammer_s17_hw1 {
     (inp: List<X>, f:Rc<F>) -> List<X> 
     where F:Fn(X) -> bool
   {
+    match inp {
+      List:: Nil => List:: Nil,
+      List::Cons(e, l) => {
+        memo!(list_filter_cons =>> <X,F>,
+               e:e, l:l
+               ;;
+               f:f)
+      },
+      List::Name(n, l) => panic!("TODO"),
+      List::Art(rc) => panic!("TODO")
+    }
+  }
+
+  pub fn list_filter_cons<X:Eq+Clone+Hash+Debug+'static,
+                          F:'static>
+    (e:X, l: Box<List<X>>, f:Rc<F>) -> List<X>
+    where F:Fn(X) -> bool
+  {
     panic!("TODO")
   }
 
