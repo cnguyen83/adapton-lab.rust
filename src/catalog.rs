@@ -790,7 +790,11 @@ pub mod hammer_s17_hw1 {
     match inp{
       List::Nil => acc,
       List::Cons(e, l) => list_reverse_cons(e, l, acc),
-      List::Name(n, l) => panic!("TODO"),
+      List::Name(n, l) => {
+        memo!(n.clone() =>> list_reverse_name =>> <X, acc>,
+          n:n, l:l
+          ;;
+          acc:acc)},
       List::Art(rc) => panic!("TODO")
     }
   }
@@ -803,12 +807,12 @@ pub mod hammer_s17_hw1 {
     list_reverse_helper(rev, *l);
   }
 
-    pub fn list_reverse_name<X:Eq+Clone+Hash+Debug+'static,
+  pub fn list_reverse_name<X:Eq+Clone+Hash+Debug+'static,
                           F:'static>
-    (n:Name, l: Box<List<X>>, acc: List<X>) -> List<X>
+  (n:Name, l: Box<List<X>>, acc: List<X>) -> List<X>
   {
     let (nm1, nm2) = name_fork(nm);
-    
+    List::Name(nm1, Box::new(List::Art(cell(nm2, acc))))
   }
 
   /// List join:
