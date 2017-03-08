@@ -769,7 +769,13 @@ pub mod hammer_s17_hw1 {
   pub fn list_split_name<X:Eq+Clone+Hash+Debug+'static,
                           F:'static>
     (n:Name, l: Box<List<X>>, f:Rc<F>) -> List<X>
-    where F:Fn(X) -> bool  
+    where F:Fn(X) -> bool
+  {
+    let (nm1, nm2) = name_fork(nm);
+    let (nm11, nm12) = name_fork(nm1);
+    let (nm21, nm22) = name_fork(nm2);
+    (List::Name(nm11, Box::new(List::Art(cell(nm21,list_split(*l, f))))), List::Name(nm12, Box::new(List::Art(cell(nm22, list_split(*l, f))))))
+  }
 
   /// List reverse:
   pub fn list_reverse<X:Eq+Clone+Hash+Debug+'static>
