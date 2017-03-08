@@ -730,7 +730,7 @@ pub mod hammer_s17_hw1 {
     where F:Fn(X) -> bool
   {
     let (nm1, nm2) = name_fork(nm);
-    List::Name(nm1, Box::new(List::Name(nm2, Box::new(list_filter(*l, f)))))
+    List::Name(nm1, Box::new(List::Art(cell(nm2, list_filter(*l, f)))))
   }
 
   /// List split:
@@ -739,28 +739,72 @@ pub mod hammer_s17_hw1 {
     (inp: List<X>, f:Rc<F>) -> (List<X>, List<X>)
     where F:Fn(X) -> bool
   {
-    panic!("TODO")
+    match inp{
+      List::Nil => (List::Nil, List::Nil),
+      List::Cons(e, l) => list_split_cons(e, l, f),
+      List::Name(n, l) => {
+        memo!(n.clone() =>> list_split_name =>> <X, F>,
+              n:n, l:l
+              ;;
+              f:f)
+      },
+      List::Art(rc) => list_split(force(&rc), f)
+    }
   }
+
+  pub fn list_split_cons<X:Eq+Clone+Hash+Debug+'static,
+                          F:'static>
+    (e:X, l: Box<List<X>>, f:Rc<F>) -> (List<X>, List<X>)
+    where F:Fn(X) -> bool
+  {
+    let expr = e.clone();
+    let (split1, split2) = list_split(*l, f);
+    if f(e) {
+      (List::Cons(expr, Box::new(split1)), split2)
+    } else {
+      (split1, List::Cons(expr, Box::new(split2)))
+    }
+  }
+
+  pub fn list_split_name<X:Eq+Clone+Hash+Debug+'static,
+                          F:'static>
+    (n:Name, l: Box<List<X>>, f:Rc<F>) -> List<X>
+    where F:Fn(X) -> bool  
 
   /// List reverse:
   pub fn list_reverse<X:Eq+Clone+Hash+Debug+'static>
     (inp: List<X>) -> List<X>
   {
-    panic!("TODO")
+    match inp{
+      List::Nil => panic!("TODO"),
+      List::Cons(e, l) => panic!("TODO"),
+      List::Name(n, l) => panic!("TODO"),
+      List::Art(rc) => panic!("TODO")
+    }
   }
 
   /// List join:
   pub fn list_join<X:Eq+Clone+Hash+Debug+'static>
     (inp: List<List<X>>) -> List<X>
   {
-    panic!("TODO")
+    match inp{
+      List::Nil => panic!("TODO"),
+      List::Cons(e, l) => panic!("TODO"),
+      List::Name(n, l) => panic!("TODO"),
+      List::Art(rc) => panic!("TODO")
+    }
   }
 
   /// List singletons:
   pub fn list_singletons<X:Eq+Clone+Hash+Debug+'static>
     (inp: List<X>) -> List<List<X>>
   {
-    panic!("TODO")
+    match inp{
+      List::Nil => panic!("TODO"),
+      List::Cons(e, l) => panic!("TODO"),
+      List::Name(n, l) => panic!("TODO"),
+      List::Art(rc) => panic!("TODO")
+    }
   }
 
 
