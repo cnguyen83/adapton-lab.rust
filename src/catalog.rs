@@ -768,7 +768,7 @@ pub mod hammer_s17_hw1 {
 
   pub fn list_split_name<X:Eq+Clone+Hash+Debug+'static,
                           F:'static>
-    (n:Name, l: Box<List<X>>, f:Rc<F>) -> List<X>
+    (n:Name, l: Box<List<X>>, f:Rc<F>) -> (List<X>, List<X>)
     where F:Fn(X) -> bool
   {
     let (nm1, nm2) = name_fork(nm);
@@ -781,12 +781,34 @@ pub mod hammer_s17_hw1 {
   pub fn list_reverse<X:Eq+Clone+Hash+Debug+'static>
     (inp: List<X>) -> List<X>
   {
+    list_reverser_helper(inp, List::Nil)
+  }
+
+  pub fn list_reverse_helper<X:Eq+Clone+Hash+Debug+'static>
+    (inp: List<X>, acc: List<X>) -> List<X>
+  {
     match inp{
-      List::Nil => panic!("TODO"),
-      List::Cons(e, l) => panic!("TODO"),
+      List::Nil => acc,
+      List::Cons(e, l) => list_reverse_cons(e, l, acc),
       List::Name(n, l) => panic!("TODO"),
       List::Art(rc) => panic!("TODO")
     }
+  }
+
+  pub fn list_reverse_cons<X:Eq+Clone+Hash+Debug+'static,
+                          F:'static>
+    (e:X, l: Box<List<X>>, acc:List<X>) -> List<X>
+  {
+    let rev = List::Cons(x, Box::new(r));
+    list_reverse_helper(rev, *l);
+  }
+
+    pub fn list_reverse_name<X:Eq+Clone+Hash+Debug+'static,
+                          F:'static>
+    (n:Name, l: Box<List<X>>, acc: List<X>) -> List<X>
+  {
+    let (nm1, nm2) = name_fork(nm);
+    
   }
 
   /// List join:
