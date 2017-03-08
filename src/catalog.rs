@@ -523,17 +523,17 @@ pub mod hammer_s17_hw0 {
   }
 
   // Second stab at List Reverse
-  pub fn list_reverse<X:Eq+Clone+Hash+Debug+'static>
-    (inp: List<X>) -> List<X>
-  {
-    match inp{
-      List::Nil => List::Nil,
-      List::Cons(e, nm, rc) => {
-        memo!(nm.clone() =>> list_reverse_cons =>> <X>,
-          e:e, nm:nm, rc:rc;;)
-      }
-    }
-  }
+//  pub fn list_reverse<X:Eq+Clone+Hash+Debug+'static>
+//    (inp: List<X>) -> List<X>
+//  {
+//    match inp{
+//      List::Nil => List::Nil,
+//      List::Cons(e, nm, rc) => {
+//        memo!(nm.clone() =>> list_reverse_cons =>> <X>,
+//          e:e, nm:nm, rc:rc;;)
+//      }
+//    }
+//  }
 
 
   // Class walkthrough 02/22/2017
@@ -700,14 +700,14 @@ pub mod hammer_s17_hw1 {
   {
     match inp {
       List:: Nil => List:: Nil,
-      List::Cons(e, l) => {
-        memo!(list_filter_cons =>> <X,F>,
-               e:e, l:l
-               ;;
-               f:f)
+      List::Cons(e, l) => list_filter_cons(e, l, f),
+      List::Name(n, l) => {
+        memo!(n.clone() =>> list_filter_name =>> <X, F>,
+              n:n, l:l
+              ;;
+              f:f)
       },
-      List::Name(n, l) => panic!("TODO"),
-      List::Art(rc) => panic!("TODO")
+      List::Art(rc) => list_filter(force(&rc), f)
     }
   }
 
@@ -716,7 +716,21 @@ pub mod hammer_s17_hw1 {
     (e:X, l: Box<List<X>>, f:Rc<F>) -> List<X>
     where F:Fn(X) -> bool
   {
-    panic!("TODO")
+    let expr = e.clone();
+    if f(e) {
+      List::Cons(expr, Box::new(list_filter(*l, f)))
+    } else {
+      list_filter(*l, f)
+    }
+  }
+
+  pub fn list_filter_name<X:Eq+Clone+Hash+Debug+'static,
+                          F:'static>
+    (n:Name, l: Box<List<X>>, f:Rc<F>) -> List<X>
+    where F:Fn(X) -> bool
+  {
+    let (nm1, nm2) = name_fork(nm);
+    List::Name(nm1, Box::new(List::Name(nm2, Box::new(list_filter(*l, f)))))
   }
 
   /// List split:
