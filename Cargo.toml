@@ -1,7 +1,14 @@
 [package]
 name = "adapton-lab"
 version = "0.1.0"
-authors = ["Matthew Hammer <matthew.hammer@colorado.edu>"]
+authors = ["Matthew A. Hammer <matthew.hammer@colorado.edu>"]
+description = "Testing and performance evaluation suite for Adapton"
+homepage = "http://adapton.org"
+repository = "https://github.com/cuplv/adapton-lab.rust/"
+readme = "README.md"
+keywords = ["Incremental", "Memoization", "Dependency-Graph", "Demand-driven", "Self-Adjusting",]
+license = "MPL-2.0"
+
 
 [dependencies]
 time = "0.1"
@@ -14,11 +21,14 @@ clap = "1"
 # pistoncore-glutin_window = "0.17.1"
 
 [dependencies.adapton]
-git = "https://github.com/cuplv/adapton.rust.git"
-branch = "dev"
-# path = "/Users/hammer/adapton"
+version = "0.3"
+#
+# git = "https://github.com/cuplv/adapton.rust.git"
+# branch = "dev"
+#
+# path = "/Users/hammer/repo/adapton.rust"
 
-# [dependencies.pmfp-collections]
-# git = "https://github.com/cuplv/pmfp-collections.rust.git"
+# [dependencies.iodyn]
+# git = "https://github.com/cuplv/iodyn.rust.git"
 # branch = "master"
-# # path = "/Users/hammer/repo/pmfp-collections.rust"
+# # path = "/Users/hammer/repo/iodyn.rust"

@@ -1,12 +1,12 @@
 use labdef::*;
-use adapton::collections::*;
+use adapton::catalog::collections::*;
 use adapton::engine::*;
 use adapton::macros::*;
 use rand::{Rng};
 use std::marker::PhantomData;
 use std::rc::Rc;
-//use pmfp_collections::inc_gauged_raz::{Raz,RazTree};
-//use pmfp_collections::inc_tree_cursor::{gen_level};
+//use iodyn::inc_gauged_raz::{Raz,RazTree};
+//use iodyn::inc_tree_cursor::{gen_level};
 
 
 #[derive(Clone,Debug)]
@@ -440,7 +440,7 @@ pub mod hammer_s17_hw0 {
   /// List filter:
   pub fn list_filter<X:Eq+Clone+Hash+Debug+'static,
                      F:'static>
-    (inp: List<X>, f:Rc<F>) -> List<X> 
+    (_inp: List<X>, _f:Rc<F>) -> List<X> 
     where F:Fn(X) -> bool
   {
     match inp {
@@ -472,7 +472,7 @@ pub mod hammer_s17_hw0 {
   /// List split:
   pub fn list_split<X:Eq+Clone+Hash+Debug+'static,
                     F:'static>
-    (inp: List<X>, f:Rc<F>) -> (List<X>, List<X>)
+    (_inp: List<X>, _f:Rc<F>) -> (List<X>, List<X>)
     where F:Fn(X) -> bool
   {
     match inp{
@@ -503,7 +503,7 @@ pub mod hammer_s17_hw0 {
 
   /// List reverse:
   pub fn list_reverse<X:Eq+Clone+Hash+Debug+'static>
-    (inp: List<X>) -> List<X>
+    (_inp: List<X>) -> List<X>
   {
     match inp{
       List::Nil => List::Nil,
@@ -695,7 +695,7 @@ pub mod hammer_s17_hw1 {
   /// List filter:
   pub fn list_filter<X:Eq+Clone+Hash+Debug+'static,
                      F:'static>
-    (inp: List<X>, f:Rc<F>) -> List<X> 
+    (_inp: List<X>, _f:Rc<F>) -> List<X> 
     where F:Fn(X) -> bool
   {
     match inp {
@@ -736,7 +736,7 @@ pub mod hammer_s17_hw1 {
   /// List split:
   pub fn list_split<X:Eq+Clone+Hash+Debug+'static,
                     F:'static>
-    (inp: List<X>, f:Rc<F>) -> (List<X>, List<X>)
+    (_inp: List<X>, _f:Rc<F>) -> (List<X>, List<X>)
     where F:Fn(X) -> bool
   {
     match inp{
@@ -779,7 +779,7 @@ pub mod hammer_s17_hw1 {
 
   /// List reverse:
   pub fn list_reverse<X:Eq+Clone+Hash+Debug+'static>
-    (inp: List<X>) -> List<X>
+    (_inp: List<X>) -> List<X>
   {
     list_reverser_helper(inp, List::Nil)
   }
@@ -817,7 +817,7 @@ pub mod hammer_s17_hw1 {
 
   /// List join:
   pub fn list_join<X:Eq+Clone+Hash+Debug+'static>
-    (inp: List<List<X>>) -> List<X>
+    (_inp: List<List<X>>) -> List<X>
   {
     match inp{
       List::Nil => panic!("TODO"),
@@ -829,7 +829,7 @@ pub mod hammer_s17_hw1 {
 
   /// List singletons:
   pub fn list_singletons<X:Eq+Clone+Hash+Debug+'static>
-    (inp: List<X>) -> List<List<X>>
+    (_inp: List<X>) -> List<List<X>>
   {
     match inp{
       List::Nil => panic!("TODO"),
@@ -885,7 +885,7 @@ pub mod hammer_s17_hw1 {
     fn edit_init<R:Rng>(_rng:&mut R, _params:&GenerateParams) -> usize { 
       return 0
     }
-    fn edit<R:Rng>(list:List<usize>, i:usize,
+    fn edit<R:Rng>(_list:List<usize>, _i:usize,
                    _rng:&mut R, _params:&GenerateParams) -> (List<usize>, usize) {
       panic!("TODO: Hammer (2017-03-01)")
     }
@@ -900,7 +900,7 @@ pub mod hammer_s17_hw1 {
     fn edit_init<R:Rng>(_rng:&mut R, _params:&GenerateParams) -> usize { 
       return 0
     }
-    fn edit<R:Rng>(list:List<List<usize>>, i:usize,
+    fn edit<R:Rng>(_list:List<List<usize>>, _i:usize,
                    _rng:&mut R, _params:&GenerateParams) -> (List<List<usize>>, usize) {
       panic!("TODO: Hammer (2017-03-01)")
     }
@@ -1381,13 +1381,13 @@ pub fn all_labs() -> Vec<Box<Lab>> {
             ListTreeSum)
       ,
     
-    labdef!(name_of_str("list-eager-mergesort3"),
-            Some(String::from("http://adapton.org/rustdoc/adapton_lab/catalog/struct.EagerMergesort3.html")),
-            List<usize>, usize,
-            List<usize>,
-            UniformPrepend<_,_>,
-            EagerMergesort3)
-      ,
+    // labdef!(name_of_str("list-eager-mergesort3"),
+    //         Some(String::from("http://adapton.org/rustdoc/adapton_lab/catalog/struct.EagerMergesort3.html")),
+    //         List<usize>, usize,
+    //         List<usize>,
+    //         UniformPrepend<_,_>,
+    //         EagerMergesort3)
+    //   ,
     labdef!(name_of_str("list-lazy-mergesort3"),
             Some(String::from("http://adapton.org/rustdoc/adapton_lab/catalog/struct.LazyMergesort3.html")),
             List<usize>, usize,
@@ -1396,13 +1396,13 @@ pub fn all_labs() -> Vec<Box<Lab>> {
             LazyMergesort3)
       ,
     
-    labdef!(name_of_str("list-eager-mergesort2"),
-            Some(String::from("http://adapton.org/rustdoc/adapton_lab/catalog/struct.EagerMergesort2.html")),
-            List<usize>, usize,
-            List<usize>,
-            UniformPrepend<_,_>,
-            EagerMergesort2)
-      ,
+    // labdef!(name_of_str("list-eager-mergesort2"),
+    //         Some(String::from("http://adapton.org/rustdoc/adapton_lab/catalog/struct.EagerMergesort2.html")),
+    //         List<usize>, usize,
+    //         List<usize>,
+    //         UniformPrepend<_,_>,
+    //         EagerMergesort2)
+    //   ,
     labdef!(name_of_str("list-lazy-mergesort2"),
             Some(String::from("http://adapton.org/rustdoc/adapton_lab/catalog/struct.LazyMergesort2.html")),
             List<usize>, usize,
@@ -1411,13 +1411,13 @@ pub fn all_labs() -> Vec<Box<Lab>> {
             LazyMergesort2)
       ,
     
-    labdef!(name_of_str("list-eager-mergesort1"),
-            Some(String::from("http://adapton.org/rustdoc/adapton_lab/catalog/struct.EagerMergesort1.html")),
-            List<usize>, usize,
-            List<usize>,
-            UniformPrepend<_,_>,
-            EagerMergesort1)
-      ,
+    // labdef!(name_of_str("list-eager-mergesort1"),
+    //         Some(String::from("http://adapton.org/rustdoc/adapton_lab/catalog/struct.EagerMergesort1.html")),
+    //         List<usize>, usize,
+    //         List<usize>,
+    //         UniformPrepend<_,_>,
+    //         EagerMergesort1)
+    //   ,
     labdef!(name_of_str("list-lazy-mergesort1"),
             Some(String::from("http://adapton.org/rustdoc/adapton_lab/catalog/struct.LazyMergesort1.html")),
             List<usize>, usize,

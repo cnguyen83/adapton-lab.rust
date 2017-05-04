@@ -1,7 +1,7 @@
 //! For more information and instructions, see the [Adapton Lab
 //! README](https://github.com/cuplv/adapton-lab.rust).
 #![feature(box_patterns)]
-#![feature(field_init_shorthand)]
+//#![feature(field_init_shorthand)]
 //#![feature(rustc_private)]
 //#![feature(custom_derive)]
 
@@ -17,7 +17,7 @@ extern crate adapton;
 
 extern crate adapton_lab;
 
-//extern crate pmfp_collections;
+//extern crate iodyn;
 
 /// Defines lab parameters `LabParams` and `LabDef`, the parameters
 /// for running the test diagram from the [Adapton Lab
@@ -44,7 +44,7 @@ pub mod catalog;
 
 use labdef::*;
 use adapton_lab::{labdef,labviz};
-use adapton::engine::reflect::string_of_name;
+use adapton::reflect::string_of_name;
 use adapton::engine::name_of_string;
 
 // fn csv_of_runtimes(path:&str, samples: Vec<Sample>) {
@@ -109,7 +109,7 @@ fn run_all_labs(params:LabParams) {
 }
 
 #[test]
-fn test_all() { run_all_tests() }
+fn test_all() { run_all_labs(lab_params_defaults()) }
 
 fn main2() { 
   let args = clap::App::new("adapton-lab")
